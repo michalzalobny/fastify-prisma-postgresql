@@ -21,3 +21,7 @@ npx prisma migrate reset
 ### Studio
 
 npx prisma studio
+
+### Swagger docs at:
+
+`http://localhost:3000/documentation/static/index.html`
