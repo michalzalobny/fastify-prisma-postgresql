@@ -1,26 +1,36 @@
-import fastify from "fastify";
+import Fastify from "fastify";
 
 import { userRoutes } from "./modules/user/user.route";
 import { userSchemas } from "./modules/user/user.schema";
 
-const server = fastify();
+const fastify = Fastify();
 
-//Used to check if the server is running
-server.get("/healthcheck", async () => {
-  return {
-    status: "OK",
-  };
+fastify.register(require("@fastify/secure-session"), {
+  // the name of the session cookie, defaults to 'session'
+  key: Buffer.from(process.env.COOKIE_KEY as string, "hex"),
+  cookie: {
+    path: "/",
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "Lax",
+  },
 });
 
-async function main() {
-  //register schemas
+fastify.after(swaggerAndSchemas);
+fastify.after(routes);
+
+function routes() {
+  fastify.register(userRoutes, { prefix: "/api/users" });
+}
+
+function swaggerAndSchemas() {
   for (const schema of userSchemas) {
-    server.addSchema(schema);
+    fastify.addSchema(schema);
   }
 
   //Swagger
-  await server.register(require("@fastify/swagger"));
-  await server.register(require("@fastify/swagger-ui"), {
+  fastify.register(require("@fastify/swagger"));
+  fastify.register(require("@fastify/swagger-ui"), {
     routePrefix: "/documentation",
     uiConfig: {
       docExpansion: "full",
@@ -29,13 +39,13 @@ async function main() {
     staticCSP: true,
     transformSpecificationClone: true,
   });
+}
 
-  server.register(userRoutes, { prefix: "/api/users" });
-
+async function main() {
   try {
-    await server.listen({ port: 3000, host: "0.0.0.0" });
+    await fastify.listen({ port: 3000, host: "0.0.0.0" });
     console.log("Server ready at http://localhost:3000");
-    await server.ready();
+    await fastify.ready();
   } catch (e) {
     console.error(e);
     process.exit(1);

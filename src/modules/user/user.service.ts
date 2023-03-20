@@ -1,14 +1,26 @@
 import { hashValue } from "../../utils/hash";
 import prisma from "../../utils/prisma";
 
-import { CreateUserInput } from "./user.schema";
+import { RegisterUserInput } from "./user.schema";
+import { Role } from "../../utils/guard";
 
-export const createUser = async (input: CreateUserInput) => {
-  const hash = await hashValue(input.password);
+export const createUser = async (input: RegisterUserInput) => {
+  const { email, name, password } = input;
+  const hash = await hashValue(password);
 
   const newUser = await prisma.user.create({
-    data: { ...input, salt: "masalt", password: hash },
+    data: { email, name, password: hash, roles: [Role.USER] },
   });
 
   return newUser;
+};
+
+export const findUserByEmail = async (email: string) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  return user;
 };

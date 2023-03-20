@@ -1,33 +1,50 @@
 import { z } from "zod";
 import { buildJsonSchemas } from "fastify-zod";
 
-const userCore = {
-  email: z
-    .string({
-      required_error: "Email is required",
-      invalid_type_error: "Email must be a string",
-    })
-    .email(),
-  name: z.string(),
-};
+const email = z
+  .string({
+    required_error: "Email is required",
+    invalid_type_error: "Email must be a string",
+  })
+  .email();
 
-const createUserSchema = z.object({
-  ...userCore,
-
-  password: z.string({
-    required_error: "Password is required",
-    invalid_type_error: "Password must be a string",
-  }),
+const password = z.string({
+  required_error: "Password is required",
+  invalid_type_error: "Password must be a string",
 });
 
-const createUserResponseSchema = z.object({
-  id: z.number(),
-  ...userCore,
+const name = z.string();
+
+const roles = z.array(z.string());
+
+const registerUserSchema = z.object({
+  email,
+  password,
+  name,
 });
 
-export type CreateUserInput = z.infer<typeof createUserSchema>;
+const registerUserResponseSchema = z.object({});
+
+const authUserLocalSchema = z.object({
+  email,
+  password,
+});
+
+const authUserLocalResponseSchema = z.object({
+  email,
+  name,
+  roles,
+});
+
+const logoutUserResponseSchema = z.object({});
+
+export type RegisterUserInput = z.infer<typeof registerUserSchema>;
+export type AuthUserLocalInput = z.infer<typeof authUserLocalSchema>;
 
 export const { schemas: userSchemas, $ref } = buildJsonSchemas({
-  createUserSchema,
-  createUserResponseSchema,
+  registerUserSchema,
+  registerUserResponseSchema,
+  authUserLocalSchema,
+  authUserLocalResponseSchema,
+  logoutUserResponseSchema,
 });
