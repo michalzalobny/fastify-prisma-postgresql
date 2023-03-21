@@ -2,7 +2,11 @@
 
 REST app built with Fastify, Prisma &amp; TypeScript
 
-### Migrate the schema
+### Init prisma client
+
+npx prisma generate
+
+### Migrate the schema in development
 
 npx prisma migrate dev --name init
 
