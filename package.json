@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only --exit-child src/app.ts",
     "build": "tsc",
-    "start": "node dist/app.js"
+    "start": "npx prisma generate && node dist/app.js"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
