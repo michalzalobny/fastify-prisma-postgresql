@@ -23,7 +23,6 @@
     "@prisma/client": "^4.11.0",
     "bcryptjs": "^2.4.3",
     "fastify": "^4.14.1",
-    "fastify-jwt": "^4.2.0",
     "fastify-zod": "^1.2.0",
     "zod": "^3.21.4",
     "zod-to-json-schema": "^3.20.4"
