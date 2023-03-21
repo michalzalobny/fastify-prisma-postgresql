@@ -4,6 +4,7 @@ import {
   registerUserHandler,
   authUserLocalHandler,
   logoutUserHandler,
+  refreshSessionHandler,
 } from "./user.controller";
 import { $ref } from "./user.schema";
 import { guard, Role } from "../../utils/guard";
@@ -33,6 +34,19 @@ export const userRoutes = async (server: FastifyInstance) => {
       },
     },
     authUserLocalHandler
+  );
+
+  server.post(
+    "/refresh-session",
+    {
+      // preValidation: [guard([Role.USER])],
+      schema: {
+        response: {
+          200: $ref("refreshSessionResponseSchema"),
+        },
+      },
+    },
+    refreshSessionHandler
   );
 
   server.post(

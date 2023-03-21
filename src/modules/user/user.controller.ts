@@ -83,3 +83,20 @@ export const logoutUserHandler = async (
   request.session.delete();
   return reply.code(200).send();
 };
+
+export const refreshSessionHandler = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  const session = request.session.get("user");
+  if (!session) {
+    return reply
+      .code(500)
+      .send({ message: serverMessages.internalServerError });
+  }
+
+  // Create a new one
+  request.session.options({ maxAge: sessionMaxAge }); // sessionMaxAge is in seconds
+  request.session.set("user", session);
+  return reply.code(200).send();
+};
