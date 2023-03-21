@@ -48,8 +48,11 @@ function swaggerAndSchemas() {
 
 async function main() {
   try {
-    await fastify.listen({ port: 3000, host: "0.0.0.0" });
-    console.log("Server ready at http://localhost:3000");
+    await fastify.listen({
+      port: Number(process.env.PORT) | 3000,
+      host: "0.0.0.0",
+    });
+    console.log(`Server ready at http://localhost:${Number(process.env.PORT)}`);
     await fastify.ready();
   } catch (e) {
     console.error(e);
