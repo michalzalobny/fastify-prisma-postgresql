@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only --exit-child src/app.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "fastify start -l info src/app.js"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
