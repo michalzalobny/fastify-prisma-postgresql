@@ -4,6 +4,7 @@ import { SessionData } from "@fastify/secure-session";
 import { createUser, findUserByEmail } from "./user.service";
 import { RegisterUserInput, AuthUserLocalInput } from "./user.schema";
 import { verifyHashedValue } from "../../utils/hash";
+import { sessionMaxAge } from "../../utils/constants";
 
 export const registerUserHandler = async (
   request: FastifyRequest<{
@@ -55,7 +56,7 @@ export const authUserLocalHandler = async (
     }
 
     // Set the user's session data
-    request.session.options({ maxAge: 60 }); // 60 seconds
+    request.session.options({ maxAge: sessionMaxAge }); // sessionMaxAge is in seconds
     request.session.set("user", { roles: user.roles, email: user.email });
 
     reply
