@@ -5,28 +5,29 @@ export enum Role {
   ADMIN = "ADMIN",
 }
 
-export const guard = async (
-  request: FastifyRequest,
-  reply: FastifyReply,
-  done: (error?: Error) => void,
-  validateForRoles: Role[]
-) => {
-  //Check if the user has a session
-  const session = request.session.get("user");
-  if (!session) {
-    return done(new Error("User session is not authenticated"));
-  }
+export const guard =
+  (validateForRoles: Role[]) =>
+  async (
+    request: FastifyRequest,
+    reply: FastifyReply,
+    done: (error?: Error) => void
+  ) => {
+    //Check if the user has a session
+    const session = request.session.get("user");
+    if (!session) {
+      return done(new Error("User session is not authenticated"));
+    }
 
-  const userRoles = session.roles;
+    const userRoles = session.roles;
 
-  //Check if the user has the required roles
-  const hasRequiredRoles = validateForRoles.every((role) =>
-    userRoles.includes(role)
-  );
+    //Check if the user has the required roles
+    const hasRequiredRoles = validateForRoles.every((role) =>
+      userRoles.includes(role)
+    );
 
-  if (hasRequiredRoles) {
-    return done();
-  }
+    if (hasRequiredRoles) {
+      return done();
+    }
 
-  return done(new Error("User session is not authorized"));
-};
+    return done(new Error("User session is not authorized"));
+  };

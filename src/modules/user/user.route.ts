@@ -38,7 +38,7 @@ export const userRoutes = async (server: FastifyInstance) => {
   server.post(
     "/logout",
     {
-      preValidation: [(req, res, done) => guard(req, res, done, [Role.USER])],
+      preValidation: [guard([Role.USER])],
       schema: {
         response: {
           200: $ref("logoutUserResponseSchema"),
