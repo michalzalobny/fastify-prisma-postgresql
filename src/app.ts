@@ -20,6 +20,11 @@ fastify.after(swaggerAndSchemas);
 fastify.after(routes);
 
 function routes() {
+  //add health check route
+  fastify.get("/health", async (request, reply) => {
+    return { status: "ok" };
+  });
+
   fastify.register(userRoutes, { prefix: "/api/users" });
 }
 
