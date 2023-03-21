@@ -4,7 +4,7 @@ import { SessionData } from "@fastify/secure-session";
 import { createUser, findUserByEmail } from "./user.service";
 import { RegisterUserInput, AuthUserLocalInput } from "./user.schema";
 import { verifyHashedValue } from "../../utils/hash";
-import { sessionMaxAge } from "../../utils/constants";
+import { sessionMaxAge, serverMessages } from "../../utils/constants";
 
 export const registerUserHandler = async (
   request: FastifyRequest<{
@@ -19,7 +19,9 @@ export const registerUserHandler = async (
     return reply.code(201).send();
   } catch (e) {
     console.log(e);
-    return reply.code(500).send({ message: "Internal server error" });
+    return reply
+      .code(500)
+      .send({ message: serverMessages.internalServerError });
   }
 };
 
@@ -43,7 +45,9 @@ export const authUserLocalHandler = async (
     //Authenticate the user
     const user = await findUserByEmail(email);
     if (!user) {
-      return reply.code(401).send({ message: "Invalid credentials" });
+      return reply
+        .code(401)
+        .send({ message: serverMessages.invalidCredentials });
     }
 
     const isPasswordValid = await verifyHashedValue({
@@ -52,7 +56,9 @@ export const authUserLocalHandler = async (
     });
 
     if (!isPasswordValid) {
-      return reply.code(401).send({ message: "Invalid credentials" });
+      return reply
+        .code(401)
+        .send({ message: serverMessages.invalidCredentials });
     }
 
     // Set the user's session data
@@ -64,7 +70,9 @@ export const authUserLocalHandler = async (
       .send({ email: user.email, name: user.name, roles: user.roles });
   } catch (e) {
     console.log(e);
-    return reply.code(500).send({ message: "Internal server error" });
+    return reply
+      .code(500)
+      .send({ message: serverMessages.internalServerError });
   }
 };
 

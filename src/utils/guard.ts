@@ -1,5 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 
+import { serverMessages } from "./constants";
+
 export enum Role {
   USER = "USER",
   ADMIN = "ADMIN",
@@ -15,7 +17,7 @@ export const guard =
     //Check if the user has a session
     const session = request.session.get("user");
     if (!session) {
-      return done(new Error("User session is not authenticated"));
+      return done(new Error(serverMessages.userSessionIsNotAuthenticated));
     }
 
     const userRoles = session.roles;
@@ -29,5 +31,5 @@ export const guard =
       return done();
     }
 
-    return done(new Error("User session is not authorized"));
+    return done(new Error(serverMessages.userSessionIsNotAuthorized));
   };
