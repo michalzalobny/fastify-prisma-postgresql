@@ -20,14 +20,14 @@ npx prisma studio
 
 ### Swagger docs at:
 
-`/documentation/static/index.html`
+`/documentation`
 
 ### env variables
 
-`DATABASE_URL=""` - postgresql database url
-`COOKIE_KEY=""` - cookie key for session, 32 bytes
-`PORT="3002"` - port for server
-`SHADOW_DATABASE_URL="` - postgresql database url for shadow database (only for development! different from DATABASE_URL)
+- `DATABASE_URL=""` - postgresql database url
+- `COOKIE_KEY=""` - cookie key for session, 32 bytes
+- `PORT="3002"` - port for server
+- `SHADOW_DATABASE_URL="` - postgresql database url for shadow database (only for development! different from DATABASE_URL)
 
 ### Structure partially based on
 
