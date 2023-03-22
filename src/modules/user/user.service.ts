@@ -1,10 +1,15 @@
 import { hashValue } from '../../utils/hash';
 import prisma from '../../utils/prisma';
 
-import { RegisterUserInput } from './user.schema';
 import { Role } from '../../utils/guard';
 
-export const createUser = async (input: RegisterUserInput) => {
+interface CreateUser {
+	email: string;
+	name: string;
+	password: string;
+}
+
+export const createUser = async (input: CreateUser) => {
 	const { email, name, password } = input;
 	const hash = await hashValue(password);
 

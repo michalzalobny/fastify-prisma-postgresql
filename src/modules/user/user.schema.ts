@@ -1,53 +1,44 @@
-import { z } from 'zod';
-import { buildJsonSchemas } from 'fastify-zod';
+import { Type } from '@sinclair/typebox';
 
-const email = z
-	.string({
-		required_error: 'Email is required',
-		invalid_type_error: 'Email must be a string',
-	})
-	.email();
+export const registerUserSchema = {
+	body: Type.Object({
+		email: Type.String(),
+		password: Type.String(),
+		name: Type.String(),
+	}),
+	response: {
+		201: Type.Never(),
+	},
+};
 
-const password = z.string({
-	required_error: 'Password is required',
-	invalid_type_error: 'Password must be a string',
-});
+export const authUserLocalSchema = {
+	body: Type.Object({
+		email: Type.String(),
+		password: Type.String(),
+	}),
+	response: {
+		200: Type.Object({
+			data: Type.Object({
+				email: Type.String(),
+				name: Type.String(),
+				roles: Type.Array(Type.String()),
+			}),
+		}),
+	},
+};
 
-const name = z.string();
+export const logoutUserSchema = {
+	response: {
+		200: Type.Object({
+			data: Type.Object({}),
+		}),
+	},
+};
 
-const roles = z.array(z.string());
-
-const registerUserSchema = z.object({
-	email,
-	password,
-	name,
-});
-
-const registerUserResponseSchema = z.object({});
-
-const authUserLocalSchema = z.object({
-	email,
-	password,
-});
-
-const authUserLocalResponseSchema = z.object({
-	email,
-	name,
-	roles,
-});
-
-const logoutUserResponseSchema = z.object({});
-
-const refreshSessionResponseSchema = z.object({});
-
-export type RegisterUserInput = z.infer<typeof registerUserSchema>;
-export type AuthUserLocalInput = z.infer<typeof authUserLocalSchema>;
-
-export const { schemas: userSchemas, $ref } = buildJsonSchemas({
-	registerUserSchema,
-	registerUserResponseSchema,
-	authUserLocalSchema,
-	authUserLocalResponseSchema,
-	logoutUserResponseSchema,
-	refreshSessionResponseSchema,
-});
+export const refreshSessionSchema = {
+	response: {
+		200: Type.Object({
+			data: Type.Object({}),
+		}),
+	},
+};

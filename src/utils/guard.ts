@@ -1,6 +1,4 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
-
-import { serverMessages } from './constants';
+import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
 export enum Role {
 	USER = 'USER',
@@ -8,12 +6,12 @@ export enum Role {
 }
 
 export const guard =
-	(validateForRoles: Role[]) =>
+	(validateForRoles: Role[], fastify: FastifyInstance) =>
 	async (request: FastifyRequest, reply: FastifyReply, done: (error?: Error) => void) => {
 		//Check if the user has a session
 		const session = request.session.get('user');
 		if (!session) {
-			return done(new Error(serverMessages.userSessionIsNotAuthenticated));
+			throw fastify.httpErrors.unauthorized();
 		}
 
 		const userRoles = session.roles;
@@ -25,5 +23,5 @@ export const guard =
 			return done();
 		}
 
-		return done(new Error(serverMessages.userSessionIsNotAuthorized));
+		throw fastify.httpErrors.unauthorized();
 	};
