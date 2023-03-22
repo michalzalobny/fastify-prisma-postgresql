@@ -32,10 +32,15 @@ npx prisma studio
 - `COOKIE_KEY=""` - cookie key for session, 32 bytes
 - `PORT="3002"` - port for server
 - `SHADOW_DATABASE_URL="` - postgresql database url for shadow database (only for development! should be different from DATABASE_URL)
+- `FRONTEND_URL="` - frontend url for CORS. For example : `http://localhost:3000`
 
 ### To build a project in production use
 
 `npm run generate-prisma-and-migrate-and-build`
+
+### Use prettier on all files
+
+`npx prettier --write .`
 
 ### Structure partially based on
 

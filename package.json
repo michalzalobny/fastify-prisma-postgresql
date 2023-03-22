@@ -19,6 +19,7 @@
 		"typescript": "^5.0.2"
 	},
 	"dependencies": {
+		"@fastify/cors": "^8.2.1",
 		"@fastify/secure-session": "^6.0.0",
 		"@fastify/swagger": "^8.3.1",
 		"@fastify/swagger-ui": "^1.5.0",

@@ -1,9 +1,14 @@
 import Fastify from 'fastify';
+import cors from '@fastify/cors';
 
 import { userRoutes } from './modules/user/user.route';
 import { userSchemas } from './modules/user/user.schema';
 
 const fastify = Fastify();
+
+fastify.register(cors, {
+	origin: process.env.FRONTEND_URL,
+});
 
 fastify.register(require('@fastify/secure-session'), {
 	// the name of the session cookie, defaults to 'session'
