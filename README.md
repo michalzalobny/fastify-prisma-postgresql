@@ -33,6 +33,10 @@ npx prisma studio
 - `PORT="3002"` - port for server
 - `SHADOW_DATABASE_URL="` - postgresql database url for shadow database (only for development! should be different from DATABASE_URL)
 
+### To build a project in production use
+
+`npm run generate-prisma-and-migrate-and-build`
+
 ### Structure partially based on
 
 `https://www.youtube.com/watch?v=LMoMHP44-xM`

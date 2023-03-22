@@ -1,32 +1,32 @@
 {
-  "name": "fastify-prisma-postgresql",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/michalzalobny/fastify-prisma-postgresql",
-  "author": "DESKTOP-PC5OSED\\Michal <michal.zalobny@gmail.com>",
-  "license": "MIT",
-  "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --exit-child src/app.ts",
-    "build": "tsc",
-    "start": "node dist/app.js",
-    "migrate-and-build": "npx prisma migrate deploy init && npm run build",
-    "generate-prisma-and-migrate-and-build": "npx prisma generate && npm run migrate-and-build"
-  },
-  "devDependencies": {
-    "@types/bcryptjs": "^2.4.2",
-    "@types/node": "^18.15.3",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.0.2"
-  },
-  "dependencies": {
-    "@fastify/secure-session": "^6.0.0",
-    "@fastify/swagger": "^8.3.1",
-    "@fastify/swagger-ui": "^1.5.0",
-    "@prisma/client": "^4.11.0",
-    "bcryptjs": "^2.4.3",
-    "fastify": "^4.14.1",
-    "fastify-zod": "^1.2.0",
-    "zod": "^3.21.4",
-    "zod-to-json-schema": "^3.20.4"
-  }
+	"name": "fastify-prisma-postgresql",
+	"version": "1.0.0",
+	"main": "index.js",
+	"repository": "https://github.com/michalzalobny/fastify-prisma-postgresql",
+	"author": "DESKTOP-PC5OSED\\Michal <michal.zalobny@gmail.com>",
+	"license": "MIT",
+	"scripts": {
+		"dev": "ts-node-dev --respawn --transpile-only --exit-child src/app.ts",
+		"build": "tsc",
+		"start": "node dist/app.js",
+		"migrate-and-build": "npx prisma migrate deploy init && npm run build",
+		"generate-prisma-and-migrate-and-build": "npx prisma generate && npm run migrate-and-build"
+	},
+	"devDependencies": {
+		"@types/bcryptjs": "^2.4.2",
+		"@types/node": "^18.15.3",
+		"ts-node-dev": "^2.0.0",
+		"typescript": "^5.0.2"
+	},
+	"dependencies": {
+		"@fastify/secure-session": "^6.0.0",
+		"@fastify/swagger": "^8.3.1",
+		"@fastify/swagger-ui": "^1.5.0",
+		"@prisma/client": "^4.11.0",
+		"bcryptjs": "^2.4.3",
+		"fastify": "^4.14.1",
+		"fastify-zod": "^1.2.0",
+		"zod": "^3.21.4",
+		"zod-to-json-schema": "^3.20.4"
+	}
 }
