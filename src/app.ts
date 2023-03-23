@@ -33,7 +33,7 @@ const app = async () => {
 			path: '/',
 			httpOnly: true,
 			secure: process.env.NODE_ENV === 'production',
-			sameSite: 'Lax',
+			sameSite: 'lax',
 		},
 	});
 
@@ -70,16 +70,11 @@ const app = async () => {
 };
 
 const start = async () => {
-	try {
-		await app();
-		await fastify.listen({
-			port: Number(process.env.PORT) | 3000,
-			host: '0.0.0.0',
-		});
-	} catch (err) {
-		fastify.log.error(err);
-		process.exit(1);
-	}
+	await app();
+	await fastify.listen({
+		port: Number(process.env.PORT) | 3000,
+		host: '0.0.0.0',
+	});
 };
 
 start().catch((err) => {

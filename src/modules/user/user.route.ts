@@ -1,11 +1,9 @@
-import { FastifyInstance } from 'fastify';
-import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
+import { TypeBoxTypeProvider, FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 import '@fastify/secure-session';
 
 import { createUser, findUserByEmail } from './user.service';
 import { verifyHashedValue } from '../../utils/hash';
 import { sessionMaxAge } from '../../utils/constants';
-
 import { guard, Role } from '../../utils/guard';
 import {
 	authUserLocalSchema,
@@ -21,8 +19,8 @@ declare module '@fastify/secure-session' {
 	}
 }
 
-export const userRoutes = async (fastify: FastifyInstance) => {
-	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
+export const userRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
+	fastify.route({
 		url: '/',
 		method: 'POST',
 		schema: registerUserSchema,
@@ -33,7 +31,7 @@ export const userRoutes = async (fastify: FastifyInstance) => {
 		},
 	});
 
-	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
+	fastify.route({
 		url: '/auth/local',
 		method: 'POST',
 		schema: authUserLocalSchema,
