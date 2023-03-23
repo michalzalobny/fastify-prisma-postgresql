@@ -67,7 +67,7 @@ export const userRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
 		},
 	});
 
-	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
+	fastify.route({
 		url: '/refresh-session',
 		method: 'POST',
 		schema: refreshSessionSchema,
@@ -84,7 +84,7 @@ export const userRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
 		},
 	});
 
-	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
+	fastify.route({
 		preValidation: [guard([Role.USER], fastify)],
 		url: '/logout',
 		method: 'POST',
