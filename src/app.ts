@@ -31,9 +31,9 @@ const app = async () => {
 		key: Buffer.from(process.env.COOKIE_KEY as string, 'hex'),
 		cookie: {
 			path: '/',
+			sameSite: 'lax',
 			httpOnly: true,
 			secure: process.env.NODE_ENV === 'production',
-			sameSite: 'lax',
 		},
 	});
 

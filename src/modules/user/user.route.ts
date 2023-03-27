@@ -1,4 +1,4 @@
-import { TypeBoxTypeProvider, FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
+import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 import '@fastify/secure-session';
 
 import { createUser, findUserByEmail } from './user.service';
@@ -60,7 +60,8 @@ export const userRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
 			return {
 				data: {
 					email: user.email,
-					name: user.name,
+					firstName: user.firstName,
+					lastName: user.lastName,
 					roles: user.roles,
 				},
 			};

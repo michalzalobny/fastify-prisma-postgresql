@@ -5,16 +5,17 @@ import { Role } from '../../utils/guard';
 
 interface CreateUser {
 	email: string;
-	name: string;
+	firstName: string;
+	lastName: string;
 	password: string;
 }
 
 export const createUser = async (input: CreateUser) => {
-	const { email, name, password } = input;
+	const { email, firstName, lastName, password } = input;
 	const hash = await hashValue(password);
 
 	const newUser = await prisma.user.create({
-		data: { email, name, password: hash, roles: [Role.USER] },
+		data: { email, firstName, lastName, password: hash, roles: [Role.USER] },
 	});
 
 	return newUser;

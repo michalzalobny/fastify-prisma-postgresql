@@ -4,7 +4,8 @@ export const registerUserSchema = {
 	body: Type.Object({
 		email: Type.String(),
 		password: Type.String(),
-		name: Type.String(),
+		firstName: Type.String(),
+		lastName: Type.String(),
 	}),
 	response: {
 		201: Type.Never(),
@@ -20,8 +21,9 @@ export const authUserLocalSchema = {
 		200: Type.Object({
 			data: Type.Object({
 				email: Type.String(),
-				name: Type.String(),
 				roles: Type.Array(Type.String()),
+				firstName: Type.String(),
+				lastName: Type.String(),
 			}),
 		}),
 	},
@@ -29,16 +31,12 @@ export const authUserLocalSchema = {
 
 export const logoutUserSchema = {
 	response: {
-		200: Type.Object({
-			data: Type.Object({}),
-		}),
+		200: Type.Never(),
 	},
 };
 
 export const refreshSessionSchema = {
 	response: {
-		200: Type.Object({
-			data: Type.Object({}),
-		}),
+		200: Type.Never(),
 	},
 };
